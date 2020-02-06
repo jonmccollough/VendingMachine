@@ -13,7 +13,6 @@ public class VendingMachine {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-
 		String vendingFile = "vendingmachine.csv";
 
 		// File newFile = new File(pointer.getParent(), "Log.txt");
@@ -31,12 +30,12 @@ public class VendingMachine {
 			String code = parts[0];
 			String name = parts[1];
 			BigDecimal price = new BigDecimal(parts[2]);
-				
+
 			if (parts[3].equals("Chip")) {
 				Items chip = new Chips(name, price, code, 5);
 				map.put(code, chip);
 			}
-			
+
 			if (parts[3].equals("Candy")) {
 				Items candy = new Candy(name, price, code, 5);
 				map.put(code, candy);
@@ -46,7 +45,7 @@ public class VendingMachine {
 				Items drink = new Beverages(name, price, code, 5);
 				map.put(code, drink);
 			}
-			
+
 			if (parts[3].equals("Gum")) {
 				Items gum = new Gum(name, price, code, 5);
 				map.put(code, gum);
