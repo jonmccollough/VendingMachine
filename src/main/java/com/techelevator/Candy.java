@@ -9,8 +9,7 @@ public class Candy extends Items {
 	}
 	
 	public String toString() {
-		return " " + name + " price: " + price + " quantity: " + quantity ;
+		return " " + name + " price: " + price + " quantity: " + quantity;
 	}
-	
- // "Munch Munch, Yum!"
+//"Munch Munch, Yum!"
 }
