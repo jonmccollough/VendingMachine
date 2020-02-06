@@ -9,7 +9,7 @@ public class Chips extends Items {
 	}
 	
 	public String toString() {
-		return name + price + "Crunch Crunch, Yum!";
+		return " " + name + " price: " + price + " quantity: "  + quantity;
 	}
 
 }

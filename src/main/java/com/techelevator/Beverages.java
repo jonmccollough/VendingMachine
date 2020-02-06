@@ -9,7 +9,7 @@ public class Beverages extends Items {
 	}
 	
 	public String toString() {
-		return name + price + "Glug Glug, Yum!";
+		return " " + name + " price: " + price + " quantity: " + quantity;
 	}
-
+ // "Glug Glug, Yum!"
 }
