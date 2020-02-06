@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class VendingMachine {
 
 	public static void main(String[] args) throws FileNotFoundException {
-
+		Scanner userInput = new Scanner(System.in);
 		String vendingFile = "vendingmachine.csv";
 
 		// File newFile = new File(pointer.getParent(), "Log.txt");
@@ -56,7 +56,7 @@ public class VendingMachine {
 		
 		boolean exit = false;			
 		while (!exit) {
-		Scanner userInput = new Scanner(System.in);
+		
 		System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
 		String direction = userInput.nextLine();
 
@@ -77,6 +77,12 @@ public class VendingMachine {
 				
 			} 
 
-		} System.exit(0);
+		}
+		
+		System.out.println("Please make a selection: (1) Feed Money (2) Select Product (3) Finish Transaction");
+		String selection = userInput.nextLine();
+		
+		
+		System.exit(0);
 	} 
 }

@@ -7,7 +7,7 @@ abstract public class Items {
 	protected String name;
 	protected BigDecimal price;
 	protected String code;
-	protected double quantity;
+	protected double quantity = 5;
 
 	public Items(String name ,BigDecimal price, String code, double quantity) {
 		this.name = name;
