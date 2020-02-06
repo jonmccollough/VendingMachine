@@ -52,31 +52,24 @@ public class VendingMachine {
 			}
 		}
 
-		for (String key : map.keySet()) {
-			System.out.println(key + ":" + map.get(key));
-		}
-
-		// } catch (IOException e) {
-
-	}
 //		System.out.println(map);
 
-//		Scanner userInput = new Scanner(System.in);
-//		System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
-//		String direction = userInput.nextLine();
-//
-//		if (direction.equals("1")) { // Display
-//			System.out.println(
-//					Chips.getName() + " " + Chips.getPrice() + " " + Chips.getCode() + " " + Chips.getQuantity());
-//
-//		}
-//		if (direction.equals("2")) { // Purchase
-//
-//		}
-//		if (direction.equals("3")) { // Exit
-//
-//			System.out.println("Exited menu");
-//
-//		}
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
+		String direction = userInput.nextLine();
 
+		if (direction.equals("1")) { // Display		
+			for (String key : map.keySet()) {
+				System.out.println(key + ":" + map.get(key)); 
+			}
+		}
+		if (direction.equals("2")) { // Purchase
+
+		}
+		if (direction.equals("3")) { // Exit
+
+			System.out.println("Exited menu");
+
+		}
+	}
 }
