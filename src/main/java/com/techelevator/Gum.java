@@ -10,5 +10,4 @@ public class Gum extends Items {
 	public String toString() {
 		return " " +name + " price: " + price + " quantity: " + quantity;
 	}
-  // "Chew Chew, Yum!"
 }
