@@ -4,6 +4,15 @@ public class Purchase {
 
 	public double balance;
 	
+	public double currentMoneyProvided = 0;
+
+	public double getCurrentMoneyProvided() {
+		return currentMoneyProvided;
+	}
+
+	public void setCurrentMoneyProvided(double currentMoneyProvided) {
+		this.currentMoneyProvided = currentMoneyProvided;
+	}
 
 	public String getChange(double balance){
 		
@@ -23,6 +32,8 @@ public class Purchase {
 			nickels ++;
 			balance -= .05;
 		}
-		return "Quarters " + quarters + " Dimes " + dimes + " Nickels " + nickels;
+		return "Quarters = " + quarters + " Dimes = " + dimes + " Nickels = " + nickels;
 		}
+
+	
 }

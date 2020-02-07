@@ -52,6 +52,8 @@ public class VendingMachine {
 //		System.out.println(map);
 
 		boolean exit = false;
+		
+		Purchase p = new Purchase();
 
 		while (!exit) {
 
@@ -63,7 +65,7 @@ public class VendingMachine {
 					System.out.println(key + ":" + map.get(key));
 				}
 			} 
-			double currentMoneyProvided = 0;
+		//	p.getCurrentMoneyProvided();
 			
 			if (direction.equals("2")) { // Purchase
 				boolean purchaseExit = false;
@@ -74,7 +76,7 @@ public class VendingMachine {
 						try {
 							while (!moneyExit) {
 								System.out.println("Please feed your money now or enter (d) when done. Current Money Provided: "
-								+ currentMoneyProvided);
+								+ p.getCurrentMoneyProvided() );
 
 								String moneyInputed = userInput.nextLine();
 
@@ -85,7 +87,7 @@ public class VendingMachine {
 
 									double moneyBigDec = Double.parseDouble(moneyInputed);
 
-									currentMoneyProvided = currentMoneyProvided + moneyBigDec;
+									p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() + moneyBigDec);
 								}
 
 						} 
@@ -100,17 +102,18 @@ public class VendingMachine {
 						
 						if (userSelection.equalsIgnoreCase("d")) {
 							purchaseExit = true;
+							break;
 						}
 						
 						if (selectedItem == null) {
 							System.out.println("Selection does not exist");
 							
-						}else if ( currentMoneyProvided >= selectedItem.getPrice() ) {
+						}else if ( p.getCurrentMoneyProvided() >= selectedItem.getPrice() ) {
 						
-							currentMoneyProvided -= selectedItem.getPrice() ;
+							p.setCurrentMoneyProvided( p.getCurrentMoneyProvided()  - selectedItem.getPrice() );
 							selectedItem.setQuantity( selectedItem.getQuantity() - 1 ); 
 						
-							System.out.println( selectedItem.getName() + " Price: " + selectedItem.getPrice() + " Money Remaining: " + currentMoneyProvided);
+							System.out.println( selectedItem.getName() + " Price: " + selectedItem.getPrice() + " Money Remaining: " + p.getCurrentMoneyProvided());
 						
 							if (selectedItem.getCode().contains("A") ) {
 								System.out.println("Crunch Crunch, Yum!");
@@ -128,7 +131,7 @@ public class VendingMachine {
 								System.out.println("Chew Chew, Yum!");
 							}
 						
-						} else if (currentMoneyProvided < selectedItem.getPrice()) {
+						} else if (p.getCurrentMoneyProvided() < selectedItem.getPrice()) {
 							System.out.println("Insufficient Funds");
 						}
 						
@@ -143,22 +146,38 @@ public class VendingMachine {
 				System.out.println("Not valid input");
 			}
 			
-			
-			
 			}
-			if (direction.equals("3")) { // Exit
-
-				Purchase p = new Purchase();
 			
-				System.out.println(p.getChange(currentMoneyProvided));
+			
+			if (direction.equals("3")) { // Exit			
 				
+				
+				double nickels = 0;
+				double dimes = 0;
+				double quarters = 0;
+						
+				while (p.getCurrentMoneyProvided() >= .25) {
+					quarters ++;
+					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .25 );
+				}
+				while (p.getCurrentMoneyProvided() >= .10) {
+					dimes ++;
+					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .10 );
+				}
+				while (p.getCurrentMoneyProvided() >= .05) {
+					nickels ++;
+					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .05);
+				}
+				 
+				System.out.println("Quarters " + quarters + " Dimes " + dimes + " Nickels " + nickels);
+				p.setCurrentMoneyProvided(0);
 				System.out.println("Exited menu");
 				//dispense change
-				System.exit(0);
+				
 			}
-		
+			
 			} 
-		userInput.close();
-		System.exit(0);
+		
+		
 	}
 }
