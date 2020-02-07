@@ -8,17 +8,12 @@ abstract public class Items {
 	protected String code;
 	protected double quantity;
 	protected Items selectedItmes;
-	protected String endPhrase;
 	
 	public Items(String name ,double price, String code, double quantity) {
 		this.name = name;
 		this.price = price;
 		this.code = code;
 		this.quantity = quantity;
-	}
-	
-	public String getEndPhrase() {
-		return endPhrase;
 	}
 	
 	public String getName() {

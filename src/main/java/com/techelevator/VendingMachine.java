@@ -47,7 +47,7 @@ public class VendingMachine {
 				Items gum = new Gum(name, price, code, 5);
 				map.put(code, gum);
 			}
-		}
+		} reader.close();
 
 //		System.out.println(map);
 
@@ -88,8 +88,6 @@ public class VendingMachine {
 									currentMoneyProvided = currentMoneyProvided + moneyBigDec;
 								}
 
-							
-
 						} 
 
 						for (String key : map.keySet()) {
@@ -109,10 +107,26 @@ public class VendingMachine {
 							
 						}else if ( currentMoneyProvided >= selectedItem.getPrice() ) {
 						
-						currentMoneyProvided -= selectedItem.getPrice() ;
+							currentMoneyProvided -= selectedItem.getPrice() ;
+							selectedItem.setQuantity( selectedItem.getQuantity() - 1 ); 
 						
-						System.out.println( selectedItem.getName() + " " + selectedItem.getPrice() + " " + currentMoneyProvided);
-						System.out.println( selectedItem.getEndPhrase() );
+							System.out.println( selectedItem.getName() + " Price: " + selectedItem.getPrice() + " Money Remaining: " + currentMoneyProvided);
+						
+							if (selectedItem.getCode().contains("A") ) {
+								System.out.println("Crunch Crunch, Yum!");
+							}
+
+							if (selectedItem.getCode().contains("B") ) {
+								System.out.println("Munch Munch, Yum!");
+							}
+
+							if (selectedItem.getCode().contains("C") ) {
+								System.out.println("Glug Glug, Yum!");
+							}
+
+							if (selectedItem.getCode().contains("D") ) {
+								System.out.println("Chew Chew, Yum!");
+							}
 						
 						} else if (currentMoneyProvided < selectedItem.getPrice()) {
 							System.out.println("Insufficient Funds");
@@ -143,9 +157,8 @@ public class VendingMachine {
 				System.exit(0);
 			}
 		
-			}
-
+			} 
+		userInput.close();
 		System.exit(0);
 	}
-
 }
