@@ -1,7 +1,13 @@
 package com.techelevator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,9 +18,6 @@ public class VendingMachine {
 		Scanner userInput = new Scanner(System.in);
 		String vendingFile = "vendingmachine.csv";
 
-		// File newFile = new File(pointer.getParent(), "Log.txt");
-
-		// File input
 		Map<String, Items> map = new HashMap<String, Items>();
 
 		Scanner reader = new Scanner(new FileReader(vendingFile));
@@ -50,7 +53,6 @@ public class VendingMachine {
 		}
 		reader.close();
 
-//		System.out.println(map);
 
 		boolean exit = false;
 
@@ -66,7 +68,6 @@ public class VendingMachine {
 					System.out.println(key + ":" + map.get(key));
 				}
 			}
-			// p.getCurrentMoneyProvided();
 
 			if (direction.equals("2")) { // Purchase
 				boolean purchaseExit = false;
@@ -77,7 +78,9 @@ public class VendingMachine {
 						try {
 							while (!moneyExit) {
 								System.out.println(
+
 										"Please feed your money ($1, $2, $5, or $10) now or enter (d) when done. Current Money Provided: "
+
 												+ p.getCurrentMoneyProvided());
 
 								String moneyInputed = userInput.nextLine();
@@ -94,9 +97,25 @@ public class VendingMachine {
 
 								}else {
 
-									double moneyBigDec = Double.parseDouble(moneyInputed);
+									File logFile = new File("Log.txt"); // For logFile
+									SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+									Date dateAndTime = new Date();
+									try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
 
-									p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() + moneyBigDec);
+										writer.print(" > " + formatter.format(dateAndTime) + " FEED MONEY ");
+										writer.print(p.getCurrentMoneyProvided() + " ");
+
+
+										double moneyBigDec = Double.parseDouble(moneyInputed);
+
+										p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() + moneyBigDec);
+
+										writer.print(p.getCurrentMoneyProvided() + " > ");
+
+									} catch (IOException e) {
+										System.out.println("Error printing FEED MONEY to log");
+										e.printStackTrace();
+									}
 								}
 
 							}
@@ -120,12 +139,33 @@ public class VendingMachine {
 
 							} else if (p.getCurrentMoneyProvided() >= selectedItem.getPrice()) {
 
+
 								if (selectedItem.getQuantity() <= 0) {
 									System.out.println("Item is SOLD OUT");
 									break;
 								}
-								p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - selectedItem.getPrice());
-								selectedItem.setQuantity(selectedItem.getQuantity() - 1);
+				
+								File logFile = new File("Log.txt"); // For logFile
+
+								SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+								Date dateAndTime = new Date();
+
+								try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
+
+									writer.print(" > " + formatter.format(dateAndTime) + " ");
+									writer.print(selectedItem.getName() + " " + selectedItem.getCode() + " ");
+									writer.print(p.getCurrentMoneyProvided());
+
+									p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - selectedItem.getPrice());
+									selectedItem.setQuantity(selectedItem.getQuantity() - 1);
+
+									writer.print(p.getCurrentMoneyProvided());
+
+								} catch (IOException e1) {
+									System.out.println("Error printing purchase to log");
+									e1.printStackTrace();
+								}
+
 
 								System.out.println(selectedItem.getName() + " Price: " + selectedItem.getPrice()
 										+ " Money Remaining: " + p.getCurrentMoneyProvided());
@@ -168,17 +208,35 @@ public class VendingMachine {
 				double dimes = 0;
 				double quarters = 0;
 
-				while (p.getCurrentMoneyProvided() >= .25) {
-					quarters++;
-					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .25);
-				}
-				while (p.getCurrentMoneyProvided() >= .10) {
-					dimes++;
-					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .10);
-				}
-				while (p.getCurrentMoneyProvided() >= .05) {
-					nickels++;
-					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .05);
+
+				File logFile = new File("Log.txt"); // For logFile
+				SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+				Date dateAndTime = new Date();
+				try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
+
+					writer.print(" > " + formatter.format(dateAndTime));
+					writer.print(" GIVE CHANGE: ");
+					writer.print(p.getCurrentMoneyProvided() + "  ");
+
+					while (p.getCurrentMoneyProvided() >= .25) {
+						quarters++;
+						p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .25);
+					}
+					while (p.getCurrentMoneyProvided() >= .10) {
+						dimes++;
+						p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .10);
+					}
+					while (p.getCurrentMoneyProvided() >= .05) {
+						nickels++;
+						p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .05);
+					}
+
+					writer.print(p.getCurrentMoneyProvided() + " > ");
+
+				} catch (IOException e) {
+					System.out.println("Error printing CHANGE to log");
+					e.printStackTrace();
+
 				}
 
 				System.out.println("Quarters " + quarters + " Dimes " + dimes + " Nickels " + nickels);
@@ -189,6 +247,8 @@ public class VendingMachine {
 			}
 
 		}
+
+		userInput.close();
 
 	}
 }
