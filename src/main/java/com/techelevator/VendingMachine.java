@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachine {
@@ -16,7 +17,7 @@ public class VendingMachine {
 		// File newFile = new File(pointer.getParent(), "Log.txt");
 
 		// File input
-		HashMap<String, Items> map = new HashMap<String, Items>();
+		Map<String, Items> map = new HashMap<String, Items>();
 
 		Scanner reader = new Scanner(new FileReader(vendingFile));
 
@@ -94,8 +95,21 @@ public class VendingMachine {
 					} catch (NumberFormatException e) {
 						System.out.println("Not valid input");
 					}
-					System.out.println("you exited the loop");
-//				}
+					
+					for (String key : map.keySet()) {
+						System.out.println(key + ":" + map.get(key));
+					}
+					
+					System.out.println("\n" + "Please make your selection and enter code.");
+					String userSelection = userInput.nextLine();
+					Items selectionCode = map.get(userSelection);
+					System.out.println(selectionCode);
+
+					if (selectionCode == null ) { 
+						System.out.println("Selection does not exist");
+
+
+				}
 			}
 			if (direction.equals("3")) { // Exit
 
