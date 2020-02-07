@@ -10,5 +10,10 @@ public class Beverages extends Items {
 	public String toString() {
 		return " " + name + " price: " + price + " quantity: " + quantity;
 	}
- // "Glug Glug, Yum!"
+	
+	public String endPhrase() {
+		return "Glug Glug, Yum!";
+	}
+
 }
+
