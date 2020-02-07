@@ -1,45 +1,28 @@
 package com.techelevator;
 
-import java.math.BigDecimal;
-import java.util.Scanner;
-
 public class Purchase {
 
-
-			
-		
-		
-		
-		
-		
-		
-		
-		
-//			boolean exit = false;
-//		
-//			Scanner userInput = new Scanner(System.in);
-//			
-//			System.out.println("Please make a selection: (1) Feed Money (2) Select Product (3) Finish Transaction");
-//			String selection = userInput.nextLine();
-//			
-//			while (!exit) {
-//				
-//			BigDecimal feedMoney =  BigDecimal.ZERO;
-//			
-//			if (selection.equals("1")) {
-//				
-//			}
-//			if (selection.equals("2")) {
-//
-//			}
-//			if (selection.equals("3")) {
-//				
-//				
-//				exit = true;
-//			}
-////			userInput.close();
-//		}
-
+	public double balance;
 	
 
+	public String getChange(double balance){
+		
+		double nickels = 0;
+		double dimes = 0;
+		double quarters = 0;
+				
+		while (balance >= .25) {
+			quarters ++;
+			balance -= .25;
+		}
+		while (balance >= .10) {
+			dimes ++;
+			balance -= .10;
+		}
+		while (balance >= .05) {
+			nickels ++;
+			balance -= .05;
+		}
+		return "Quarters " + quarters + " Dimes " + dimes + " Nickels " + nickels;
+		}
 }

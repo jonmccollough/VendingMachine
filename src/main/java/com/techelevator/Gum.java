@@ -3,8 +3,8 @@ package com.techelevator;
 
 public class Gum extends Items {
 	
-	public Gum(String name , double price, String code, double quantity, String endPhrase) {
-		super(name, price, code, quantity, endPhrase);
+	public Gum(String name , double price, String code, double quantity) {
+		super(name, price, code, quantity);
 	}
 	
 	public String toString() {

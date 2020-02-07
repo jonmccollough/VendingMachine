@@ -10,12 +10,11 @@ abstract public class Items {
 	protected Items selectedItmes;
 	protected String endPhrase;
 	
-	public Items(String name ,double price, String code, double quantity, String endPhrase) {
+	public Items(String name ,double price, String code, double quantity) {
 		this.name = name;
 		this.price = price;
 		this.code = code;
 		this.quantity = quantity;
-		this.endPhrase = endPhrase;
 	}
 	
 	public String getEndPhrase() {

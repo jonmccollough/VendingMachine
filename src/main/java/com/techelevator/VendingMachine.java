@@ -2,8 +2,6 @@ package com.techelevator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -98,10 +96,14 @@ public class VendingMachine {
 							System.out.println(key + ":" + map.get(key));
 						}
 
-						System.out.println("\n" + "Please make your selection and enter code.");
+						System.out.println("\n" + "Please make your selection and enter code or enter (d) when done.");
 						String userSelection = userInput.nextLine();
 						Items selectedItem = map.get(userSelection);
-
+						
+						if (userSelection.equalsIgnoreCase("d")) {
+							purchaseExit = true;
+						}
+						
 						if (selectedItem == null) {
 							System.out.println("Selection does not exist");
 							
@@ -126,9 +128,16 @@ public class VendingMachine {
 			} catch (NumberFormatException e) {
 				System.out.println("Not valid input");
 			}
+			
+			
+			
 			}
 			if (direction.equals("3")) { // Exit
 
+				Purchase p = new Purchase();
+			
+				System.out.println(p.getChange(currentMoneyProvided));
+				
 				System.out.println("Exited menu");
 				//dispense change
 				System.exit(0);
