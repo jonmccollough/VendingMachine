@@ -47,12 +47,13 @@ public class VendingMachine {
 				Items gum = new Gum(name, price, code, 5);
 				map.put(code, gum);
 			}
-		} reader.close();
+		}
+		reader.close();
 
 //		System.out.println(map);
 
 		boolean exit = false;
-		
+
 		Purchase p = new Purchase();
 
 		while (!exit) {
@@ -64,9 +65,9 @@ public class VendingMachine {
 				for (String key : map.keySet()) {
 					System.out.println(key + ":" + map.get(key));
 				}
-			} 
-		//	p.getCurrentMoneyProvided();
-			
+			}
+			// p.getCurrentMoneyProvided();
+
 			if (direction.equals("2")) { // Purchase
 				boolean purchaseExit = false;
 				try {
@@ -75,109 +76,119 @@ public class VendingMachine {
 						boolean moneyExit = false;
 						try {
 							while (!moneyExit) {
-								System.out.println("Please feed your money now or enter (d) when done. Current Money Provided: "
-								+ p.getCurrentMoneyProvided() );
+								System.out.println(
+										"Please feed your money ($1, $2, $5, or $10) now or enter (d) when done. Current Money Provided: "
+												+ p.getCurrentMoneyProvided());
 
 								String moneyInputed = userInput.nextLine();
 
-								if (moneyInputed.equalsIgnoreCase("d")) {
+								
+								
+								if (!moneyInputed.equals("1") && !moneyInputed.equals("2") && !moneyInputed.equals("5")
+										&& !moneyInputed.equals("10") && !moneyInputed.equals("d")) {
+									System.out.println("Invalid bill, try again.");
+									continue;
+									
+								} if (moneyInputed.equalsIgnoreCase("d")) {
 									moneyExit = true;
 
-								} else {
+								}else {
 
 									double moneyBigDec = Double.parseDouble(moneyInputed);
 
 									p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() + moneyBigDec);
 								}
 
-						} 
-
-						for (String key : map.keySet()) {
-							System.out.println(key + ":" + map.get(key));
-						}
-
-						System.out.println("\n" + "Please make your selection and enter code or enter (d) when done.");
-						String userSelection = userInput.nextLine();
-						Items selectedItem = map.get(userSelection);
-						
-						if (userSelection.equalsIgnoreCase("d")) {
-							purchaseExit = true;
-							break;
-						}
-						
-						if (selectedItem == null) {
-							System.out.println("Selection does not exist");
-							
-						}else if ( p.getCurrentMoneyProvided() >= selectedItem.getPrice() ) {
-						
-							p.setCurrentMoneyProvided( p.getCurrentMoneyProvided()  - selectedItem.getPrice() );
-							selectedItem.setQuantity( selectedItem.getQuantity() - 1 ); 
-						
-							System.out.println( selectedItem.getName() + " Price: " + selectedItem.getPrice() + " Money Remaining: " + p.getCurrentMoneyProvided());
-						
-							if (selectedItem.getCode().contains("A") ) {
-								System.out.println("Crunch Crunch, Yum!");
 							}
 
-							if (selectedItem.getCode().contains("B") ) {
-								System.out.println("Munch Munch, Yum!");
+							for (String key : map.keySet()) {
+								System.out.println(key + ":" + map.get(key));
 							}
 
-							if (selectedItem.getCode().contains("C") ) {
-								System.out.println("Glug Glug, Yum!");
+							System.out.println(
+									"\n" + "Please make your selection and enter code or enter (d) when done.");
+							String userSelection = userInput.nextLine();
+							Items selectedItem = map.get(userSelection);
+
+							if (userSelection.equalsIgnoreCase("d")) {
+								purchaseExit = true;
+								break;
 							}
 
-							if (selectedItem.getCode().contains("D") ) {
-								System.out.println("Chew Chew, Yum!");
+							if (selectedItem == null) {
+								System.out.println("Selection does not exist");
+
+							} else if (p.getCurrentMoneyProvided() >= selectedItem.getPrice()) {
+
+								if (selectedItem.getQuantity() <= 0) {
+									System.out.println("Item is SOLD OUT");
+									break;
+								}
+								p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - selectedItem.getPrice());
+								selectedItem.setQuantity(selectedItem.getQuantity() - 1);
+
+								System.out.println(selectedItem.getName() + " Price: " + selectedItem.getPrice()
+										+ " Money Remaining: " + p.getCurrentMoneyProvided());
+
+								if (selectedItem.getCode().contains("A")) {
+									System.out.println("Crunch Crunch, Yum!");
+								}
+
+								if (selectedItem.getCode().contains("B")) {
+									System.out.println("Munch Munch, Yum!");
+								}
+
+								if (selectedItem.getCode().contains("C")) {
+									System.out.println("Glug Glug, Yum!");
+								}
+
+								if (selectedItem.getCode().contains("D")) {
+									System.out.println("Chew Chew, Yum!");
+								}
+
+							} else if (p.getCurrentMoneyProvided() < selectedItem.getPrice()) {
+								System.out.println("Insufficient Funds");
 							}
-						
-						} else if (p.getCurrentMoneyProvided() < selectedItem.getPrice()) {
-							System.out.println("Insufficient Funds");
-						}
-						
+
 						} catch (NumberFormatException e) {
 							System.out.println("Not valid input");
 						}
-						
-						
-					} //purchase exit end
-				
-			} catch (NumberFormatException e) {
-				System.out.println("Not valid input");
+
+					} // purchase exit end
+
+				} catch (NumberFormatException e) {
+					System.out.println("Not valid input");
+				}
+
 			}
-			
-			}
-			
-			
-			if (direction.equals("3")) { // Exit			
-				
-				
+
+			if (direction.equals("3")) { // Exit
+
 				double nickels = 0;
 				double dimes = 0;
 				double quarters = 0;
-						
+
 				while (p.getCurrentMoneyProvided() >= .25) {
-					quarters ++;
-					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .25 );
+					quarters++;
+					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .25);
 				}
 				while (p.getCurrentMoneyProvided() >= .10) {
-					dimes ++;
-					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .10 );
+					dimes++;
+					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .10);
 				}
 				while (p.getCurrentMoneyProvided() >= .05) {
-					nickels ++;
-					p.setCurrentMoneyProvided( p.getCurrentMoneyProvided() - .05);
+					nickels++;
+					p.setCurrentMoneyProvided(p.getCurrentMoneyProvided() - .05);
 				}
-				 
+
 				System.out.println("Quarters " + quarters + " Dimes " + dimes + " Nickels " + nickels);
 				p.setCurrentMoneyProvided(0);
 				System.out.println("Exited menu");
-				//dispense change
-				
+				// dispense change
+
 			}
-			
-			} 
-		
-		
+
+		}
+
 	}
 }
