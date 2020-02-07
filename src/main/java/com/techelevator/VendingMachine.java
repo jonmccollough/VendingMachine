@@ -51,20 +51,11 @@ public class VendingMachine {
 		}
 
 //		System.out.println(map);
-<<<<<<< HEAD
-		
-		boolean exit = false;			
-		while (!exit) {
-		
-		System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
-		String direction = userInput.nextLine();
-
-=======
->>>>>>> 2fd0f2b0dd3d4541ef8b8c07a782583da36bbeda
 
 		boolean exit = false;
+		
 		while (!exit) {
-			Scanner userInput = new Scanner(System.in);
+
 			System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
 			String direction = userInput.nextLine();
 
@@ -75,53 +66,46 @@ public class VendingMachine {
 			}
 			if (direction.equals("2")) { // Purchase
 
-				boolean purchaseExit = false;
-				while (!purchaseExit) {
+//				boolean purchaseExit = false;
+//				while (!purchaseExit) {
 
 					BigDecimal currentMoneyProvided = BigDecimal.ZERO;
 
 					boolean moneyExit = false;
-					while (!moneyExit) {
-						System.out.println("Please feed your money now or enter (d) when done. Current Money Provided: "
-								+ currentMoneyProvided);
-					
-						String moneyInputed = userInput.nextLine();
-						
-						if(moneyInputed.equals("d") ){
-							moneyExit = true;
-							
-						}	else {
-							
-						BigDecimal moneyBigDec = new BigDecimal(Integer.parseInt(moneyInputed));
-						
-						currentMoneyProvided = currentMoneyProvided.add(moneyBigDec);
-						
-					
+					try {
+						while (!moneyExit) {
+							System.out.println(
+									"Please feed your money now or enter (d) when done. Current Money Provided: "
+											+ currentMoneyProvided);
+
+							String moneyInputed = userInput.nextLine();
+
+							if (moneyInputed.equals("d")) {
+								moneyExit = true;
+
+							} else {
+
+								BigDecimal moneyBigDec = new BigDecimal(Integer.parseInt(moneyInputed));
+
+								currentMoneyProvided = currentMoneyProvided.add(moneyBigDec);
+							}
+
 						}
-						
+					} catch (NumberFormatException e) {
+						System.out.println("Not valid input");
 					}
-
-				} System.out.println("you exited the loop");
-
+					System.out.println("you exited the loop");
+//				}
 			}
 			if (direction.equals("3")) { // Exit
 
 				System.out.println("Exited menu");
-
-<<<<<<< HEAD
 		}
 		
-		System.out.println("Please make a selection: (1) Feed Money (2) Select Product (3) Finish Transaction");
-		String selection = userInput.nextLine();
-		
-		
-		System.exit(0);
-	} 
-=======
-			}
 
 		}
+
 		System.exit(0);
 	}
->>>>>>> 2fd0f2b0dd3d4541ef8b8c07a782583da36bbeda
+
 }
