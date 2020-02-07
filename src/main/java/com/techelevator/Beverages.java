@@ -1,10 +1,9 @@
 package com.techelevator;
 
-import java.math.BigDecimal;
 
 public class Beverages extends Items {
 	
-	public Beverages(String name ,BigDecimal price, String code, double quantity) {
+	public Beverages(String name ,double price, String code, double quantity) {
 		super(name, price, code, quantity);
 	}
 	

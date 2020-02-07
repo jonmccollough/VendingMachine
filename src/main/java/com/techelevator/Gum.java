@@ -1,10 +1,9 @@
 package com.techelevator;
 
-import java.math.BigDecimal;
 
 public class Gum extends Items {
 	
-	public Gum(String name ,BigDecimal price, String code, double quantity) {
+	public Gum(String name , double price, String code, double quantity) {
 		super(name, price, code, quantity);
 	}
 	

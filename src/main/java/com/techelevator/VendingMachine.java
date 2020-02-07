@@ -28,7 +28,7 @@ public class VendingMachine {
 
 			String code = parts[0];
 			String name = parts[1];
-			BigDecimal price = new BigDecimal(parts[2]);
+			double price = Double.parseDouble(parts[2]);
 
 			if (parts[3].equals("Chip")) {
 				Items chip = new Chips(name, price, code, 5);
@@ -54,7 +54,7 @@ public class VendingMachine {
 //		System.out.println(map);
 
 		boolean exit = false;
-		
+
 		while (!exit) {
 
 			System.out.println("> (1) Display Vending Machine Items > (2) Purchase > (3) Exit >");
@@ -64,60 +64,77 @@ public class VendingMachine {
 				for (String key : map.keySet()) {
 					System.out.println(key + ":" + map.get(key));
 				}
-			}
+			} 
+			double currentMoneyProvided = 0;
+			
 			if (direction.equals("2")) { // Purchase
+				boolean purchaseExit = false;
+				try {
+					while (!purchaseExit) {
 
-//				boolean purchaseExit = false;
-//				while (!purchaseExit) {
+						boolean moneyExit = false;
+						try {
+							while (!moneyExit) {
+								System.out.println("Please feed your money now or enter (d) when done. Current Money Provided: "
+								+ currentMoneyProvided);
 
-					BigDecimal currentMoneyProvided = BigDecimal.ZERO;
+								String moneyInputed = userInput.nextLine();
 
-					boolean moneyExit = false;
-					try {
-						while (!moneyExit) {
-							System.out.println(
-									"Please feed your money now or enter (d) when done. Current Money Provided: "
-											+ currentMoneyProvided);
+								if (moneyInputed.equalsIgnoreCase("d")) {
+									moneyExit = true;
 
-							String moneyInputed = userInput.nextLine();
+								} else {
 
-							if (moneyInputed.equals("d")) {
-								moneyExit = true;
+									double moneyBigDec = Double.parseDouble(moneyInputed);
 
-							} else {
+									currentMoneyProvided = currentMoneyProvided + moneyBigDec;
+								}
 
-								BigDecimal moneyBigDec = new BigDecimal(Integer.parseInt(moneyInputed));
+							
 
-								currentMoneyProvided = currentMoneyProvided.add(moneyBigDec);
-							}
+						} 
 
+						for (String key : map.keySet()) {
+							System.out.println(key + ":" + map.get(key));
 						}
-					} catch (NumberFormatException e) {
-						System.out.println("Not valid input");
-					}
-					
-					for (String key : map.keySet()) {
-						System.out.println(key + ":" + map.get(key));
-					}
-					
-					System.out.println("\n" + "Please make your selection and enter code.");
-					String userSelection = userInput.nextLine();
-					Items selectionCode = map.get(userSelection);
-					System.out.println(selectionCode);
 
-					if (selectionCode == null ) { 
-						System.out.println("Selection does not exist");
+						System.out.println("\n" + "Please make your selection and enter code.");
+						String userSelection = userInput.nextLine();
+						Items selectedItem = map.get(userSelection);
 
-
-				}
+						if (selectedItem == null) {
+							System.out.println("Selection does not exist");
+							
+						}else if ( currentMoneyProvided >= selectedItem.getPrice() ) {
+						
+						currentMoneyProvided -= selectedItem.getPrice() ;
+						
+						System.out.println( selectedItem.getName() + " " + selectedItem.getPrice() + " " + currentMoneyProvided);
+						System.out.println( selectedItem.getEndPhrase() );
+						
+						} else if (currentMoneyProvided < selectedItem.getPrice()) {
+							System.out.println("Insufficient Funds");
+						}
+						
+						} catch (NumberFormatException e) {
+							System.out.println("Not valid input");
+						}
+						
+						
+					} //purchase exit end
+				
+			} catch (NumberFormatException e) {
+				System.out.println("Not valid input");
+			}
 			}
 			if (direction.equals("3")) { // Exit
 
 				System.out.println("Exited menu");
-		}
+				//dispense change
+				System.exit(0);
+			}
 		
-
-		}
+			}
 
 		System.exit(0);
 	}

@@ -1,26 +1,32 @@
 package com.techelevator;
 
-import java.math.BigDecimal;
 
 abstract public class Items {
 
 	protected String name;
-	protected BigDecimal price;
+	protected double price;
 	protected String code;
-	protected double quantity = 5;
-
-	public Items(String name ,BigDecimal price, String code, double quantity) {
+	protected double quantity;
+	protected Items selectedItmes;
+	protected String endPhrase;
+	
+	public Items(String name ,double price, String code, double quantity, String endPhrase) {
 		this.name = name;
 		this.price = price;
 		this.code = code;
 		this.quantity = quantity;
+		this.endPhrase = endPhrase;
+	}
+	
+	public String getEndPhrase() {
+		return endPhrase;
 	}
 	
 	public String getName() {
 		return name;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -30,6 +36,18 @@ abstract public class Items {
 
 	public double getQuantity() {
 		return quantity;
+	}
+
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+
+	public Items getSelectedItmes() {
+		return selectedItmes;
+	}
+
+	public void setSelectedItmes(Items selectedItmes) {
+		this.selectedItmes = selectedItmes;
 	}
 
 
